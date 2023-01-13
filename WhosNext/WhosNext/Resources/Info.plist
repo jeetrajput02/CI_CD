@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>amazonaws.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSThirdPartyExceptionMinimumTLSVersion</key>
+                <string>TLSv1.0</string>
+                <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                <false/>
+            </dict>
+            <key>amazonaws.com.cn</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSThirdPartyExceptionMinimumTLSVersion</key>
+                <string>TLSv1.0</string>
+                <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                <false/>
+            </dict>
+        </dict>
+	</dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>AlexBrushRegular.otf</string>
+		<string>blowbrush.otf</string>
+		<string>Futura Medium Italic.otf</string>
+		<string>Futura Bold Condensed.otf</string>
+		<string>Futura Bold.otf</string>
+		<string>Futura Extra Bold Condensed.otf</string>
+		<string>Futura Italic.ttf</string>
+		<string>Futura Bold Italic.otf</string>
+		<string>Futura Book.otf</string>
+		<string>Futura BoldItalic.ttf</string>
+		<string>Futura Extra Bold Condensed Oblique.otf</string>
+		<string>Futura T Bold Oblique.ttf</string>
+		<string>Futura T Bold.ttf</string>
+		<string>Futura Bold Condensed Oblique.otf</string>
+		<string>Futura Light Condensed.otf</string>
+		<string>Futura Bold Oblique.otf</string>
+		<string>De Futura Regular.ttf</string>
+		<string>Futura Medium Condensed Oblique.otf</string>
+		<string>Futura Black.ttf</string>
+		<string>Futura Heavy.otf</string>
+		<string>Futura Medium.otf</string>
+		<string>Futura Condensed ExtraBold.ttf</string>
+		<string>Futura BQ Regular.otf</string>
+		<string>Futura Condensed.ttf</string>
+		<string>Futura Hv Heavy.ttf</string>
+		<string>Futura T Medium.ttf</string>
+		<string>Futura Light Condensed Oblique.otf</string>
+		<string>Futura Medium Oblique.otf</string>
+		<string>Futura Medium Condensed.otf</string>
+		<string>Futura Regular.ttf</string>
+		<string>Futura Light.otf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchScreen</key>
+	<dict/>
+</dict>
+</plist>

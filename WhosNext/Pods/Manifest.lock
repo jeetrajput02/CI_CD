@@ -1,0 +1,56 @@
+PODS:
+  - Alamofire (5.6.2)
+  - AWSCognito (2.19.1):
+    - AWSCore (= 2.19.1)
+  - AWSCore (2.19.1)
+  - AWSS3 (2.19.1):
+    - AWSCore (= 2.19.1)
+  - BottomSheet (1.0.6)
+  - IQKeyboardManagerSwift (6.5.10)
+  - SDWebImage (5.14.2):
+    - SDWebImage/Core (= 5.14.2)
+  - SDWebImage/Core (5.14.2)
+  - SDWebImageSwiftUI (2.2.1):
+    - SDWebImage (~> 5.10)
+
+DEPENDENCIES:
+  - Alamofire
+  - AWSCognito
+  - AWSCore
+  - AWSS3
+  - BottomSheet (from `https://github.com/weitieda/bottom-sheet.git`)
+  - IQKeyboardManagerSwift
+  - SDWebImageSwiftUI
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - AWSCognito
+    - AWSCore
+    - AWSS3
+    - IQKeyboardManagerSwift
+    - SDWebImage
+    - SDWebImageSwiftUI
+
+EXTERNAL SOURCES:
+  BottomSheet:
+    :git: https://github.com/weitieda/bottom-sheet.git
+
+CHECKOUT OPTIONS:
+  BottomSheet:
+    :commit: 6b21007153365235418f3943a960a1f9546592e0
+    :git: https://github.com/weitieda/bottom-sheet.git
+
+SPEC CHECKSUMS:
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  AWSCognito: f50de600804941d083af37a7568905f31a774727
+  AWSCore: 55c154ae27efc5c98bdc30a0eeea5a35d10a2ab5
+  AWSS3: 2272253b098d07803af8dd20ce6ce7302bcffb47
+  BottomSheet: 0a164143e34470cc332db0ce4e55d6da202d7ac6
+  IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
+  SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
+  SDWebImageSwiftUI: 2ecf5ab6f574526326b10ecb155e72a88059d0f0
+
+PODFILE CHECKSUM: 2db433fc9e9242e49e689be634a98f513a2fd1b2
+
+COCOAPODS: 1.11.3

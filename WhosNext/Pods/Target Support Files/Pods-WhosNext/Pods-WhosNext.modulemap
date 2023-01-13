@@ -1,0 +1,6 @@
+framework module Pods_WhosNext {
+  umbrella header "Pods-WhosNext-umbrella.h"
+
+  export *
+  module * { export * }
+}
