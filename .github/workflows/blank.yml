@@ -102,13 +102,13 @@ jobs:
           echo "After saving: "
           ls ~/private_keys
 
-# for validate and upload build using issuerId and appStore api key
-    - name: upload file to testflight
-      run: |
-          ls ~/private_keys
-          # ===============================================================================
-          xcrun altool --validate-app --file /Users/runner/work/_temp/export/WhosNext.ipa --type ios { --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }} } --verbose
-          # ===============================================================================
+# # for validate and upload build using issuerId and appStore api key
+#     - name: upload file to testflight
+#       run: |
+#           ls ~/private_keys
+#           # ===============================================================================
+#           xcrun altool --validate-app --file /Users/runner/work/_temp/export/WhosNext.ipa --type ios { --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }} } --verbose
+#           # ===============================================================================
 
 #           # ===============================================================================
 #           xcrun altool --upload-app --file /Users/runner/work/_temp/export/WhosNext.ipa --type ios { --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }} } --verbose
