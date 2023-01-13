@@ -51,7 +51,7 @@ jobs:
         cd /Users/runner/
         mkdir -p private_keys
 
-# for update build version
+for update build version
 # change the build number before the pushing git
     - name: update build
       run: |
