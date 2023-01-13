@@ -1,6 +1,8 @@
 
 # This workflow will build a Swift project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+#make changes in < placeholder >  here only.
 name: iOS_CI/CD
 on:
   push:
@@ -12,76 +14,103 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    # - name: Build
-    #   run: swift build -v
-    # - name: Run tests
+  
+# for install app certificate and provision profile in remote machine/ github remote server
     - name: Install the Apple certificate and provisioning profile
-      env: 
+      env:
         BUILD_CERTIFICATE_BASE64: ${{ secrets.IOS_PROD_CERTIFICATE }}
         P12_PASSWORD: ${{ secrets.IOS_PROD_CERTIFICATE_PASSWORD }}
         BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.IOS_PROVISION_PRODUCTION }}
         KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-      # Users/differenz239/Documents/CICD\ Pipeline/Cerificates/BrijeshSir_Distribution.p12
+
       run: |
         echo "$RUNNER_TEMP"
-        CERTIFICATE_PATH=$RUNNER_TEMP/BrijeshSir_Distribution.p12
-        PP_PATH=$RUNNER_TEMP/CICDFruitDetail__Distribution_22_NOV_2022.mobileprovision
+        # ===========================================================================================
+        CERTIFICATE_PATH=$RUNNER_TEMP/WhosNext_Production.p12
+        # ===========================================================================================
+        
+        # ===========================================================================================
+        PP_PATH=$RUNNER_TEMP/WhoIsNextApp_Production_21DEC2022.mobileprovision
+        # ===========================================================================================
+        
         KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
         # import certificate and provisioning profile from secrets
         echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
         echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
-        # create temporary keychain
-        security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-        security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-        security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-        # import certificate to keychain
-        security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-        security list-keychain -d user -s $KEYCHAIN_PATH
-        # apply provisioning profile
-        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-        cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles 
+        # # create temporary keychain
+        # security create-keychain -p "ChangeMe007" $KEYCHAIN_PATH
+        # security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+        # security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        # # import certificate to keychain
+        # security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+        # security list-keychain -d user -s $KEYCHAIN_PATH
+        # # apply provisioning profile
+        # mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        # cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
         # make Private key
         cd /Users/runner/
         mkdir -p private_keys
 
-    - name: update build 
-      run: |
-        xcrun agvtool new-version -all 14
+# # for update build version
+# # change the build number before the pushing git
+#     - name: update build
+#       run: |
+#         xcrun agvtool new-version -all 14
 
-    # # - name: update version number
-    # #   run: |
-    # #     xcrun agvtool new-marketing-version 1.1
-    #    # Actions Production
+# for update version number
+# change the version number before the pushing git (if needed)
+#    - name: update version number
+#      run: |
+#        xcrun agvtool new-marketing-version 1.6.3
+
+
+## for archive build without pod workspace file
+#    - name: iOS app
+#      run: xcodebuild  -scheme "WhosNext" clean archive -archivePath "Actions" -configuration "Release Production"
     
-    # - name: iOS app
-    #   run: xcodebuild -workspace "fructus.xcworkspace"  -scheme "fructus" clean archive -archivePath "Actions" -configuration "Release Production" 
-    # - name: export ipa
-    #   env: 
-    #     EXPORT_PLIST: ${{ secrets.IOS_EXPORT_OPTION}} 
-    #   run: |
-    #       EXPORT_PLIST_PATH=$RUNNER_TEMP/ExportOptions.plist
-    #       echo -n "$EXPORT_PLIST" | base64 --decode --output $EXPORT_PLIST_PATH
-    #       xcodebuild -exportArchive -archivePath $GITHUB_WORKSPACE/Actions.xcarchive -exportOptionsPlist $EXPORT_PLIST_PATH -exportPath $RUNNER_TEMP/export
-    #       echo "$RUNNER_TEMP/export"
+# # for archive build with pod workspace file
+#     - name: iOS app
+#       run: xcodebuild -workspace "WhosNext.xcworkspace"  -scheme "WhosNext" clean archive -archivePath "Actions" -configuration "Release Production"
 
-    # #below step is required if you have space in schema name
-    # - name: Rename the file, remove whitespace 
-    #   run: |
-    #       echo Export directory contents:
-    #       ls /Users/runner/work/_temp/export/
-    #       mv "/Users/runner/work/_temp/export/fructus.ipa" "/Users/runner/work/_temp/export/fructus.ipa" 
-    #       ls /Users/runner/work/_temp/export/
+# # for export ipa file
+#     - name: export ipa
+#       env:
+#         EXPORT_PLIST: ${{ secrets.IOS_EXPORT_OPTION }}
+#       run: |
+#           EXPORT_PLIST_PATH=$RUNNER_TEMP/ExportOptions.plist
+#           echo -n "$EXPORT_PLIST" | base64 --decode --output $EXPORT_PLIST_PATH
+#           xcodebuild -exportArchive -archivePath $GITHUB_WORKSPACE/Actions.xcarchive -exportOptionsPlist $EXPORT_PLIST_PATH -exportPath $RUNNER_TEMP/export
+#           echo "$RUNNER_TEMP/export"
 
-    # - name: Decode auth. ani key file and save
-    #   env: 
-    #     API_KEY_BASE64: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
-    #   run: |
-    #       ls ~/private_keys 
-    #       echo -n "$API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8
-    #       echo "After saving: "
-    #       ls ~/private_keys
-    # - name: upload file to testflight
-    #   run: |
-    #        ls ~/private_keys
-    #        xcrun altool --validate-app --file /Users/runner/work/_temp/export/fructus.ipa --type ios { --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }} } --verbose
-    #        xcrun altool --upload-app --file /Users/runner/work/_temp/export/fructus.ipa --type ios { --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }} } --verbose
+## for remove whiteSpace from scheme name. if it is contain any whitespace.
+#    - name: Rename the file, remove whitespace
+#      run: |
+#          echo Export directory contents:
+#          ls /Users/runner/work/_temp/export/
+#          # ==========================================================================
+#          mv "/Users/runner/work/_temp/export/< .ipa file name with space ex.- letter men.ipa >" "/Users/runner/work/_temp/export/< .ipa file name without space ex.- lettermen.ipa >"
+#          # ==========================================================================
+#          ls /Users/runner/work/_temp/export/
+
+# # for authentication using appStore api key.
+#     - name: Decode auth. ani key file and save
+#       env:
+#         API_KEY_BASE64: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+#       run: |
+#           ls ~/private_keys
+#           echo -n "$API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8
+#           echo "After saving: "
+#           ls ~/private_keys
+
+## for validate and upload build using issuerId and appStore api key
+#    - name: upload file to testflight
+#      run: |
+#           ls ~/private_keys
+#           # ===============================================================================
+#           xcrun altool --validate-app --file /Users/runner/work/_temp/export/WhosNext.ipa --type ios { --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }} } --verbose
+#           # ===============================================================================
+#
+#           # ===============================================================================
+#           xcrun altool --upload-app --file /Users/runner/work/_temp/export/WhosNext.ipa --type ios { --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }} } --verbose
+#           # ===============================================================================
+
