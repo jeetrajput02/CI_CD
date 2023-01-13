@@ -38,11 +38,11 @@ jobs:
         echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
         echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
         # # create temporary keychain
-        security create-keychain -p "ChangeMe007" $KEYCHAIN_PATH
+        security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
         security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
         security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
         # import certificate to keychain
-        security import $CERTIFICATE_PATH -P "ChangeMe007" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH 
+        security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH 
         security list-keychain -d user -s $KEYCHAIN_PATH
         # # apply provisioning profile
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
@@ -92,15 +92,15 @@ jobs:
 #          # ==========================================================================
 #          ls /Users/runner/work/_temp/export/
 
-# # for authentication using appStore api key.
-#     - name: Decode auth. ani key file and save
-#       env:
-#         API_KEY_BASE64: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
-#       run: |
-#           ls ~/private_keys
-#           echo -n "$API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8
-#           echo "After saving: "
-#           ls ~/private_keys
+# for authentication using appStore api key.
+    - name: Decode auth. ani key file and save
+      env:
+        API_KEY_BASE64: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+      run: |
+          ls ~/private_keys
+          echo -n "$API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8
+          echo "After saving: "
+          ls ~/private_keys
 
 ## for validate and upload build using issuerId and appStore api key
 #    - name: upload file to testflight
