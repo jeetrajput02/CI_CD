@@ -95,21 +95,21 @@ jobs:
 # for authentication using appStore api key.
     - name: Decode auth. ani key file and save
       env:
-        API_KEY_BASE64: ${{ secrets.APPSTORE_API_PRIVATE_KEY }} 
+        API_KEY_BASE64: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
       run: |
           ls ~/private_keys
           echo -n "$API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8
           echo "After saving: "
           ls ~/private_keys
 
-# for validate and upload build using issuerId and appStore api key
-   - name: upload file to testflight
-     run: |
-          ls ~/private_keys
-          # ===============================================================================
-          xcrun altool --validate-app --file /Users/runner/work/_temp/export/WhosNext.ipa --type ios { --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }} } --verbose
-          # ===============================================================================
-
+## for validate and upload build using issuerId and appStore api key
+#    - name: upload file to testflight
+#      run: |
+#           ls ~/private_keys
+#           # ===============================================================================
+#           xcrun altool --validate-app --file /Users/runner/work/_temp/export/WhosNext.ipa --type ios { --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }} } --verbose
+#           # ===============================================================================
+#
 #           # ===============================================================================
 #           xcrun altool --upload-app --file /Users/runner/work/_temp/export/WhosNext.ipa --type ios { --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }} } --verbose
 #           # ===============================================================================
