@@ -123,7 +123,7 @@ struct RecordAudioView: View {
                 
             }
             .navigationBarItems(leading: HStack {
-                Button {
+                Button { 
                     self.recordVm.fetchAllRecording()
                     if self.recordVm.recordingsList.count > 0 {
                         recordVm.deleteRecording(url:recordVm.recordingsList[0].fileURL)
